@@ -1,0 +1,12 @@
+{
+  "name": "ai-concept-coach-demo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI Concept Coach first demo with a tiny built-in Node backend",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

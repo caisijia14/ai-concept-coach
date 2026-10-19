@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": "cai-sijia",
+      "name": "Sijia",
+      "email": "sijia@conceptcoach.local",
+      "role": "Candidate",
+      "streak": 4,
+      "focus": "RAG / Agents",
+      "createdAt": "2026-10-19T00:00:00.000Z"
+    },
+    {
+      "id": "product-demo",
+      "name": "Ava",
+      "email": "ava@conceptcoach.local",
+      "role": "PM Demo",
+      "streak": 7,
+      "focus": "Alignment / Eval",
+      "createdAt": "2026-10-19T00:00:00.000Z"
+    },
+    {
+      "id": "engineer-demo",
+      "name": "Leo",
+      "email": "leo@conceptcoach.local",
+      "role": "Engineer Demo",
+      "streak": 2,
+      "focus": "Transformer / Infra",
+      "createdAt": "2026-10-19T00:00:00.000Z"
+    }
+  ],
+  "concepts": [],
+  "sessions": [],
+  "masteryRecords": []
+}
