@@ -8,6 +8,52 @@ const state = {
   currentUser: null
 };
 
+
+const learningPaths = {
+  foundations: ['机器学习', 'Transformer', 'Embeddings'],
+  'llm-systems': ['RAG', 'Context Window', 'Multimodal'],
+  'agents-tools': ['AI Agents', 'Function Calling', 'MCP'],
+  'safety-eval': ['Guardrails', 'Evals', 'RL-HF'],
+  customization: ['LoRA', 'MoE', 'RL-HF']
+};
+
+function renderPathPreview(pathKey) {
+  const concepts = learningPaths[pathKey] || [];
+  if (!concepts.length) return;
+  dom.conceptSection.classList.remove('hidden');
+  dom.quizSection.classList.add('hidden');
+  dom.resultSection.classList.add('hidden');
+  dom.conceptSection.innerHTML = `
+    <div class="concept-panel">
+      <div class="concept-meta">
+        <div>
+          <div class="small-kicker">Learning path</div>
+          <h3 style="margin:10px 0 6px; font-size: 30px;">${pathKey.replace(/-/g, ' ')}</h3>
+          <p class="muted">你可以按这个顺序逐步学习，先打基础，再扩展到更复杂的系统概念。</p>
+        </div>
+      </div>
+      <div class="content-grid">
+        ${concepts.map((concept, index) => `
+          <div class="info-block">
+            <h4>第 ${index + 1} 步</h4>
+            <p class="card-copy">${concept}</p>
+          </div>
+        `).join('')}
+      </div>
+      <div class="hero-actions">
+        <button class="btn btn-primary" data-path-start="${concepts[0]}">从第一步开始</button>
+      </div>
+    </div>
+  `;
+  const btn = dom.conceptSection.querySelector('[data-path-start]');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      dom.conceptInput.value = btn.dataset.pathStart;
+      generateConcept();
+    });
+  }
+}
+
 const dom = {
   conceptInput: document.getElementById('conceptInput'),
   generateBtn: document.getElementById('generateBtn'),
@@ -392,6 +438,9 @@ function bindStaticEvents() {
       dom.conceptInput.value = chip.dataset.concept;
       generateConcept();
     });
+  });
+  document.querySelectorAll('.path-trigger').forEach((card) => {
+    card.addEventListener('click', () => renderPathPreview(card.dataset.path));
   });
   dom.openLoginBtn.addEventListener('click', () => setLoginModal(true));
   dom.closeLoginBtn.addEventListener('click', () => setLoginModal(false));

@@ -68,7 +68,7 @@ input {
   color: white;
   font-weight: 800;
   font-size: 22px;
-  background: linear-gradient(135deg, #7c5cff, #8d7bff 50%, #48a082);
+  background: linear-gradient(135deg, #111827, #344256 60%, #6b7280);
 }
 .brand-block h1 {
   margin: 0;
@@ -523,7 +523,8 @@ input {
   .result-grid,
   .mastery-card,
   .input-row,
-  .user-switch-row {
+  .user-switch-row,
+  .paths-grid {
     grid-template-columns: 1fr;
   }
   .header-actions,

@@ -43,16 +43,16 @@
         </div>
         <div class="starter-list">
           <button class="starter-item starter-trigger" data-concept="RAG">
-            <strong>RAG</strong>
-            <span>理解检索与生成如何配合，以及它和微调的区别。</span>
+            <strong>MCP</strong>
+            <span>理解模型如何更稳定地接入外部工具和上下文。</span>
           </button>
           <button class="starter-item starter-trigger" data-concept="Transformer">
-            <strong>Transformer</strong>
-            <span>理解 attention、并行处理和位置编码这些基础能力。</span>
+            <strong>AI Agents</strong>
+            <span>理解多步规划、工具调用和执行闭环。</span>
           </button>
           <button class="starter-item starter-trigger" data-concept="RL-HF">
-            <strong>RL-HF</strong>
-            <span>理解 alignment、reward model 和偏好训练流程。</span>
+            <strong>Evals</strong>
+            <span>理解模型和 AI 应用为什么需要系统性评估。</span>
           </button>
         </div>
       </div>
@@ -75,10 +75,49 @@
 
         <div class="chip-row">
           <button class="chip" data-concept="RAG">RAG</button>
-          <button class="chip" data-concept="Transformer">Transformer</button>
-          <button class="chip" data-concept="RL-HF">RL-HF</button>
+          <button class="chip" data-concept="MCP">MCP</button>
+          <button class="chip" data-concept="AI Agents">AI Agents</button>
+          <button class="chip" data-concept="Evals">Evals</button>
+          <button class="chip" data-concept="机器学习">机器学习</button>
           <button class="chip" data-concept="Function Calling">Function Calling</button>
           <button class="chip" data-concept="MoE">MoE</button>
+        </div>
+
+        <div class="new-concepts-block">
+          <div class="small-kicker">New concepts</div>
+          <div class="chip-row secondary-row">
+            <button class="chip subtle-chip" data-concept="LoRA">LoRA</button>
+            <button class="chip subtle-chip" data-concept="Embeddings">Embeddings</button>
+            <button class="chip subtle-chip" data-concept="Context Window">Context Window</button>
+            <button class="chip subtle-chip" data-concept="Guardrails">Guardrails</button>
+            <button class="chip subtle-chip" data-concept="Multimodal">Multimodal</button>
+          </div>
+        </div>
+
+        <div class="learning-paths-block">
+          <div class="small-kicker">Learning paths</div>
+          <div class="paths-grid">
+            <button class="path-card path-trigger" data-path="foundations">
+              <strong>Foundations</strong>
+              <span>机器学习、Transformer、Embeddings</span>
+            </button>
+            <button class="path-card path-trigger" data-path="llm-systems">
+              <strong>LLM Systems</strong>
+              <span>RAG、Context Window、Multimodal</span>
+            </button>
+            <button class="path-card path-trigger" data-path="agents-tools">
+              <strong>Agents & Tools</strong>
+              <span>AI Agents、Function Calling、MCP</span>
+            </button>
+            <button class="path-card path-trigger" data-path="safety-eval">
+              <strong>Safety & Eval</strong>
+              <span>Guardrails、Evals、RL-HF</span>
+            </button>
+            <button class="path-card path-trigger" data-path="customization">
+              <strong>Customization</strong>
+              <span>LoRA、MoE、RL-HF</span>
+            </button>
+          </div>
         </div>
 
         <section id="conceptSection" class="hidden"></section>
@@ -140,7 +179,7 @@
       <div class="modal-form">
         <label>
           <span>昵称</span>
-          <input id="loginNameInput" type="text" placeholder="例如：Sijia" />
+          <input id="loginNameInput" type="text" placeholder="例如：liming" />
         </label>
         <label>
           <span>邮箱</span>
