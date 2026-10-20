@@ -7,80 +7,70 @@
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <div class="mesh"></div>
-  <div class="app-shell">
-    <header class="topbar glass-card">
-      <div class="brand-wrap">
-        <div class="brand">
-          <div class="brand-mark">AC</div>
-          <div>
-            <h1>AI Concept Coach</h1>
-            <p>把 AI 概念从“看过”变成“会解释、会做题、会复习”的学习型原型</p>
-          </div>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="brand-block">
+        <div class="brand-mark">AC</div>
+        <div>
+          <h1>AI Concept Coach</h1>
+          <p>学懂一个 AI 概念，从解释到练习再到复习。</p>
         </div>
-        <p class="top-note">这版 demo 已加上：假登录入口、用户切换、结果可视化、错题卡片、复习时间线。</p>
       </div>
-      <div class="user-switch card-surface">
-        <div class="user-switch-head">
-          <span class="eyebrow">Demo auth</span>
-          <span class="live-dot">online</span>
-        </div>
-        <div class="user-switch-row">
-          <div id="activeUserCard" class="active-user-card"></div>
-          <select id="userSelect" class="user-select"></select>
-        </div>
+      <div class="header-actions">
+        <div id="activeUserCard" class="current-user"></div>
+        <button class="btn btn-secondary" id="openLoginBtn">登录</button>
       </div>
     </header>
 
-    <section class="hero-grid">
-      <article class="hero-main glass-card glow-card">
-        <div class="hero-badge">Full-stack learning workflow</div>
-        <h2>不是再做一个 AI 总结器，<br />而是做一个带状态和复习闭环的学习工具。</h2>
-        <p class="muted hero-copy">输入概念后，系统会生成概念卡、生成 3 道小测、提交结果到后端、更新掌握度，并把待复习时间和学习历史存起来。当前版本已经切到 SQLite 持久化，后续也可以继续平滑迁移到 Supabase。</p>
+    <section class="hero-row">
+      <div class="hero-copy card">
+        <div class="section-tag">AI concept learning</div>
+        <h2>把复杂概念拆成更容易理解、练习和复习的学习过程。</h2>
+        <p>输入一个概念，先读懂它，再做一轮小测，最后把结果变成下一次复习的起点。</p>
         <div class="hero-actions">
-          <button class="btn btn-primary" id="jumpGenerateBtn">开始学一个概念</button>
-          <button class="btn btn-secondary" id="loadDashboardBtn">刷新学习数据</button>
+          <button class="btn btn-primary" id="jumpGenerateBtn">开始学习</button>
+          <button class="btn btn-secondary" id="loadDashboardBtn">刷新页面</button>
         </div>
-        <div id="overviewStats" class="hero-stats"></div>
-      </article>
+        <div id="overviewStats" class="stats-row"></div>
+      </div>
 
-      <aside class="hero-side glass-card">
-        <div class="panel-title-row">
+      <div class="quick-start card">
+        <div class="panel-head">
           <div>
-            <span class="eyebrow">Suggested concepts</span>
-            <h3>推荐起步概念</h3>
+            <div class="small-kicker">Quick start</div>
+            <h3>从这些概念开始</h3>
           </div>
         </div>
-        <div class="side-list">
-          <div class="side-item">
+        <div class="starter-list">
+          <button class="starter-item starter-trigger" data-concept="RAG">
             <strong>RAG</strong>
-            <p>适合展示“检索 + 生成”的完整解释、小测与误区分析。</p>
-          </div>
-          <div class="side-item">
+            <span>理解检索与生成如何配合，以及它和微调的区别。</span>
+          </button>
+          <button class="starter-item starter-trigger" data-concept="Transformer">
             <strong>Transformer</strong>
-            <p>适合展示对 attention、并行和位置编码的理解。</p>
-          </div>
-          <div class="side-item">
+            <span>理解 attention、并行处理和位置编码这些基础能力。</span>
+          </button>
+          <button class="starter-item starter-trigger" data-concept="RL-HF">
             <strong>RL-HF</strong>
-            <p>适合展示 alignment、reward model 和训练流程理解。</p>
-          </div>
+            <span>理解 alignment、reward model 和偏好训练流程。</span>
+          </button>
         </div>
-      </aside>
+      </div>
     </section>
 
-    <section class="workspace-grid">
-      <main class="workspace-column glass-card">
-        <div class="panel-title-row">
+    <section class="main-layout">
+      <main class="workspace card">
+        <div class="panel-head workspace-head">
           <div>
-            <span class="eyebrow">Workspace</span>
-            <h3>概念学习工作区</h3>
-            <p class="muted">先生成概念卡，再生成小测，最后查看结果分析和复习计划。</p>
+            <div class="small-kicker">Workspace</div>
+            <h3>概念学习区</h3>
+            <p>先输入概念，再开始一轮学习。</p>
           </div>
         </div>
 
         <div class="input-row">
-          <input id="conceptInput" type="text" placeholder="输入一个 AI 概念，例如：RAG / Transformer / RL-HF" />
-          <button class="btn btn-primary" id="generateBtn">生成概念卡</button>
+          <input id="conceptInput" type="text" placeholder="输入一个 AI 概念，例如：RAG、Transformer、RL-HF" />
+          <button class="btn btn-primary" id="generateBtn">开始</button>
         </div>
 
         <div class="chip-row">
@@ -96,81 +86,71 @@
         <section id="resultSection" class="hidden"></section>
       </main>
 
-      <aside class="side-column">
-        <section class="glass-card side-panel">
-          <div class="panel-title-row compact">
+      <aside class="sidebar">
+        <section class="card side-card">
+          <div class="panel-head compact-head">
             <div>
-              <span class="eyebrow">System design</span>
-              <h4>数据结构与状态流</h4>
+              <div class="small-kicker">Recent</div>
+              <h4>最近学习</h4>
             </div>
           </div>
-          <div class="schema-grid" id="schemaGrid"></div>
-          <div class="flow-card">
-            <div class="flow-title">generate → quiz → submit → mastery update</div>
-            <p class="muted">概念生成后会创建 session，提交答案后会写入 sessions，并同步更新 mastery_records 与 review_due_at。</p>
+          <div id="historyList" class="stack-list">
+            <div class="empty-state">登录后，这里会记录你的学习历史。</div>
           </div>
         </section>
 
-        <section class="glass-card side-panel">
-          <div class="panel-title-row compact">
+        <section class="card side-card">
+          <div class="panel-head compact-head">
             <div>
-              <span class="eyebrow">History</span>
-              <h4>最近学习记录</h4>
+              <div class="small-kicker">Review</div>
+              <h4>待复习</h4>
             </div>
           </div>
-          <div id="historyList" class="history-list">
-            <div class="empty-state">还没有学习记录。</div>
+          <div id="reviewList" class="stack-list">
+            <div class="empty-state">当前还没有待复习内容。</div>
           </div>
         </section>
 
-        <section class="glass-card side-panel">
-          <div class="panel-title-row compact">
+        <section class="card side-card">
+          <div class="panel-head compact-head">
             <div>
-              <span class="eyebrow">Review queue</span>
-              <h4>待复习概念</h4>
+              <div class="small-kicker">Progress</div>
+              <h4>掌握情况</h4>
             </div>
           </div>
-          <div id="reviewList" class="review-list">
-            <div class="empty-state">当前没有到期复习任务。</div>
-          </div>
-        </section>
-
-        <section class="glass-card side-panel">
-          <div class="panel-title-row compact">
-            <div>
-              <span class="eyebrow">Mastery</span>
-              <h4>掌握度概览</h4>
-            </div>
-          </div>
-          <div id="masteryList" class="mastery-list">
-            <div class="empty-state">答题后这里会显示掌握度。</div>
-          </div>
-        </section>
-
-        <section class="glass-card side-panel">
-          <div class="panel-title-row compact">
-            <div>
-              <span class="eyebrow">SQLite viewer</span>
-              <h4>数据库内容预览</h4>
-            </div>
-          </div>
-          <div class="db-view-grid">
-            <div class="db-box">
-              <strong>concepts</strong>
-              <div id="dbConcepts" class="db-list"><div class="empty-state">暂无 concept。</div></div>
-            </div>
-            <div class="db-box">
-              <strong>sessions</strong>
-              <div id="dbSessions" class="db-list"><div class="empty-state">暂无 session。</div></div>
-            </div>
-            <div class="db-box">
-              <strong>mastery_records</strong>
-              <div id="dbMastery" class="db-list"><div class="empty-state">暂无 mastery record。</div></div>
-            </div>
+          <div id="masteryList" class="stack-list">
+            <div class="empty-state">完成一轮练习后，这里会显示你的掌握情况。</div>
           </div>
         </section>
       </aside>
     </section>
+  </div>
+
+  <div id="loginModal" class="modal hidden">
+    <div class="modal-backdrop" id="closeLoginBackdrop"></div>
+    <div class="modal-card">
+      <div class="panel-head">
+        <div>
+          <div class="small-kicker">Sign in</div>
+          <h3>登录后继续学习</h3>
+          <p class="muted">输入昵称和邮箱，就可以保存你的学习记录和复习进度。</p>
+        </div>
+        <button class="icon-btn" id="closeLoginBtn" aria-label="关闭">×</button>
+      </div>
+      <div class="modal-form">
+        <label>
+          <span>昵称</span>
+          <input id="loginNameInput" type="text" placeholder="例如：Sijia" />
+        </label>
+        <label>
+          <span>邮箱</span>
+          <input id="loginEmailInput" type="email" placeholder="name@example.com" />
+        </label>
+      </div>
+      <div class="hero-actions modal-actions">
+        <button class="btn btn-primary" id="submitLoginBtn">登录并开始学习</button>
+      </div>
+    </div>
   </div>
 
   <script src="/app.js"></script>

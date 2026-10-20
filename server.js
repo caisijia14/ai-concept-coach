@@ -439,6 +439,37 @@ function buildGeneratedConcept(input) {
   };
 }
 
+
+function findUserByEmail(email) {
+  const row = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+  return row ? {
+    id: row.id,
+    name: row.name,
+    email: row.email,
+    role: row.role,
+    streak: row.streak,
+    focus: row.focus,
+    createdAt: row.created_at
+  } : null;
+}
+
+function createUser(name, email) {
+  const user = {
+    id: slugify(email) || randomUUID(),
+    name,
+    email,
+    role: 'Learner',
+    streak: 1,
+    focus: 'New concepts',
+    createdAt: new Date().toISOString()
+  };
+  db.prepare(`
+    INSERT INTO users (id, name, email, role, streak, focus, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `).run(user.id, user.name, user.email, user.role, user.streak, user.focus, user.createdAt);
+  return user;
+}
+
 function getUsers() {
   return db.prepare('SELECT * FROM users ORDER BY created_at ASC').all().map((row) => ({
     id: row.id,
@@ -753,6 +784,19 @@ function routeApi(req, res, pathname) {
 
   if (req.method === 'GET' && pathname === '/api/users') {
     return sendJson(res, 200, { currentUser, users: getUsers() });
+  }
+
+  if (req.method === 'POST' && pathname === '/api/auth/login') {
+    return collectBody(req)
+      .then((body) => {
+        const name = (body.name || '').trim();
+        const email = (body.email || '').trim().toLowerCase();
+        if (!name || !email) return sendJson(res, 400, { error: 'name and email are required' });
+        let user = findUserByEmail(email);
+        if (!user) user = createUser(name, email);
+        sendJson(res, 200, { user });
+      })
+      .catch(() => sendJson(res, 400, { error: 'invalid json body' }));
   }
 
   if (req.method === 'GET' && pathname === '/api/dashboard') {

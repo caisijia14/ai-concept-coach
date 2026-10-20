@@ -4,8 +4,8 @@ const state = {
   questions: [],
   answers: {},
   result: null,
-  users: [],
-  currentUserId: localStorage.getItem('conceptCoachUser') || 'cai-sijia'
+  currentUserId: localStorage.getItem('conceptCoachUser') || '',
+  currentUser: null
 };
 
 const dom = {
@@ -19,13 +19,15 @@ const dom = {
   historyList: document.getElementById('historyList'),
   reviewList: document.getElementById('reviewList'),
   masteryList: document.getElementById('masteryList'),
-  userSelect: document.getElementById('userSelect'),
   activeUserCard: document.getElementById('activeUserCard'),
   overviewStats: document.getElementById('overviewStats'),
-  schemaGrid: document.getElementById('schemaGrid'),
-  dbConcepts: document.getElementById('dbConcepts'),
-  dbSessions: document.getElementById('dbSessions'),
-  dbMastery: document.getElementById('dbMastery')
+  openLoginBtn: document.getElementById('openLoginBtn'),
+  loginModal: document.getElementById('loginModal'),
+  closeLoginBtn: document.getElementById('closeLoginBtn'),
+  closeLoginBackdrop: document.getElementById('closeLoginBackdrop'),
+  submitLoginBtn: document.getElementById('submitLoginBtn'),
+  loginNameInput: document.getElementById('loginNameInput'),
+  loginEmailInput: document.getElementById('loginEmailInput')
 };
 
 async function apiFetch(url, options = {}) {
@@ -46,106 +48,33 @@ function formatDate(value) {
   return new Date(value).toLocaleString('zh-CN');
 }
 
-function renderActiveUser(user) {
-  if (!user) return;
+function setLoginModal(open) {
+  dom.loginModal.classList.toggle('hidden', !open);
+}
+
+function renderCurrentUser(user) {
+  state.currentUser = user;
+  if (!user) {
+    dom.activeUserCard.innerHTML = `
+      <strong>未登录</strong>
+      <p>登录后保存学习记录和复习进度</p>
+    `;
+    dom.openLoginBtn.textContent = '登录';
+    return;
+  }
+
   dom.activeUserCard.innerHTML = `
     <strong>${user.name}</strong>
-    <p>${user.role} · Focus on ${user.focus}</p>
-    <p>连续学习 ${user.streak} 天 · ${user.email}</p>
+    <p>${user.email}</p>
   `;
-}
-
-function renderUserSelect(users, currentUser) {
-  state.users = users;
-  dom.userSelect.innerHTML = users.map((user) => `
-    <option value="${user.id}" ${user.id === currentUser.id ? 'selected' : ''}>${user.name} · ${user.role}</option>
-  `).join('');
-  renderActiveUser(currentUser);
-}
-
-
-function renderSchema() {
-  const schemaCards = [
-    {
-      table: 'users',
-      fields: ['id', 'name', 'email', 'role', 'focus', 'streak'],
-      desc: '假登录入口与用户切换依赖这张表。'
-    },
-    {
-      table: 'concepts',
-      fields: ['id', 'slug', 'title', 'category', 'summary_*', 'quiz_template_json'],
-      desc: '概念卡与 quiz 模板的来源。'
-    },
-    {
-      table: 'sessions',
-      fields: ['id', 'user_id', 'concept_id', 'status', 'questions_json', 'answers_json', 'score'],
-      desc: '每次学习流程都会创建一条 session。'
-    },
-    {
-      table: 'mastery_records',
-      fields: ['user_id', 'concept_id', 'mastery_score', 'last_score', 'review_due_at'],
-      desc: '记录掌握度与下次复习时间。'
-    }
-  ];
-
-  dom.schemaGrid.innerHTML = schemaCards.map((card) => `
-    <div class="schema-card">
-      <strong>${card.table}</strong>
-      <div>${card.fields.map((field) => `<code>${field}</code>`).join('')}</div>
-      <p class="mini-meta" style="margin-top:8px;">${card.desc}</p>
-    </div>
-  `).join('');
-}
-
-function renderDbPreview(section, items, formatter, emptyText) {
-  section.innerHTML = items.length
-    ? items.map(formatter).join('')
-    : `<div class="empty-state">${emptyText}</div>`;
-}
-
-function renderDatabasePreview(dashboard) {
-  renderDbPreview(
-    dom.dbConcepts,
-    dashboard.preview?.concepts || [],
-    (item) => `
-      <div class="db-item">
-        <div class="db-item-title"><span>${item.title}</span><span>${item.category}</span></div>
-        <div class="db-item-meta">slug: ${item.slug}</div>
-      </div>
-    `,
-    '暂无 concept。'
-  );
-
-  renderDbPreview(
-    dom.dbSessions,
-    dashboard.preview?.sessions || [],
-    (item) => `
-      <div class="db-item">
-        <div class="db-item-title"><span>${item.conceptTitle}</span><span>${item.status}</span></div>
-        <div class="db-item-meta">score: ${item.score == null ? '—' : item.score} · ${formatDate(item.createdAt)}</div>
-      </div>
-    `,
-    '暂无 session。'
-  );
-
-  renderDbPreview(
-    dom.dbMastery,
-    dashboard.preview?.mastery || [],
-    (item) => `
-      <div class="db-item">
-        <div class="db-item-title"><span>${item.conceptTitle}</span><span>${item.masteryScore}</span></div>
-        <div class="db-item-meta">next review: ${formatDate(item.reviewDueAt)}</div>
-      </div>
-    `,
-    '暂无 mastery record。'
-  );
+  dom.openLoginBtn.textContent = '切换账户';
 }
 
 function renderOverview(overview = {}) {
   const cards = [
-    { label: '最近学习', value: overview.sessions ?? 0, note: '当前用户最近 5 次 session' },
-    { label: '待复习', value: overview.dueCount ?? 0, note: '已经到期的 review 任务' },
-    { label: '完成率', value: `${overview.completionRate ?? 0}%`, note: '最近 session 的完成情况' }
+    { label: '学习次数', value: overview.sessions ?? 0, note: '最近学习记录' },
+    { label: '待复习', value: overview.dueCount ?? 0, note: '到期的复习内容' },
+    { label: '完成率', value: `${overview.completionRate ?? 0}%`, note: '最近几次学习完成情况' }
   ];
   dom.overviewStats.innerHTML = cards.map((card) => `
     <div class="stat">
@@ -162,7 +91,7 @@ function renderConcept(concept) {
     <div class="concept-panel">
       <div class="concept-meta">
         <div>
-          <span class="eyebrow">Concept card</span>
+          <div class="small-kicker">Concept</div>
           <h3 style="margin:10px 0 6px; font-size: 30px;">${concept.title}</h3>
           <p class="muted">${concept.summaryShort}</p>
         </div>
@@ -170,24 +99,24 @@ function renderConcept(concept) {
       </div>
       <div class="content-grid">
         <div class="info-block">
-          <h4>通俗解释</h4>
+          <h4>先用人话理解</h4>
           <p class="card-copy">${concept.summaryPlain}</p>
         </div>
         <div class="info-block">
-          <h4>技术解释</h4>
+          <h4>再看技术解释</h4>
           <p class="card-copy">${concept.summaryTechnical}</p>
         </div>
         <div class="info-block">
-          <h4>类比</h4>
+          <h4>可以这样类比</h4>
           <p class="card-copy">${concept.analogy}</p>
         </div>
         <div class="info-block">
-          <h4>关键点</h4>
+          <h4>这次先记住</h4>
           <ul class="list">${concept.keyPoints.map((item) => `<li>${item}</li>`).join('')}</ul>
         </div>
       </div>
       <div class="hero-actions">
-        <button class="btn btn-primary" id="generateQuizBtn">生成 3 道小测</button>
+        <button class="btn btn-primary" id="generateQuizBtn">开始做 3 道题</button>
       </div>
     </div>
   `;
@@ -198,17 +127,17 @@ function renderQuiz(questions, conceptTitle) {
   dom.quizSection.classList.remove('hidden');
   dom.quizSection.innerHTML = `
     <div class="quiz-shell">
-      <div class="panel-title-row">
+      <div class="panel-head">
         <div>
-          <span class="eyebrow">Quiz</span>
+          <div class="small-kicker">Practice</div>
           <h4 style="font-size: 24px;">${conceptTitle} 小测</h4>
-          <p class="muted">先回答这 3 道题，再查看错因分析、掌握度和复习时间线。</p>
+          <p class="muted">先做完这一轮题，再看你哪里掌握了，哪里还需要复习。</p>
         </div>
       </div>
       ${questions.map((question, index) => `
         <div class="quiz-card">
           <div class="meta-row">
-            <span class="mini-pill progress-chip">Q${index + 1}</span>
+            <span class="mini-pill progress-chip">第 ${index + 1} 题</span>
             <span class="mini-pill">${question.type === 'boolean' ? '判断题' : '单选题'}</span>
           </div>
           <h4>${question.question}</h4>
@@ -220,7 +149,7 @@ function renderQuiz(questions, conceptTitle) {
         </div>
       `).join('')}
       <div class="hero-actions">
-        <button class="btn btn-primary" id="submitQuizBtn">提交答案并写入学习记录</button>
+        <button class="btn btn-primary" id="submitQuizBtn">提交答案</button>
       </div>
     </div>
   `;
@@ -239,13 +168,13 @@ function renderQuiz(questions, conceptTitle) {
   document.getElementById('submitQuizBtn').addEventListener('click', submitQuiz);
 }
 
-function buildWrongAnswerCards(answers) {
+function buildAnswerCards(answers) {
   return answers.map((item) => {
-    const klass = item.isCorrect ? 'wrong-answer-card correct' : 'wrong-answer-card';
+    const klass = item.isCorrect ? 'answer-card correct' : 'answer-card';
     return `
       <div class="${klass}">
         <div class="meta-row">
-          <span class="mini-pill ${item.isCorrect ? 'progress-chip' : 'review-chip'}">${item.isCorrect ? '答对' : '待复习'}</span>
+          <span class="mini-pill ${item.isCorrect ? 'progress-chip' : 'review-chip'}">${item.isCorrect ? '已掌握' : '建议复习'}</span>
           <span class="mini-pill">正确答案：${item.correctAnswer}</span>
         </div>
         <strong>${item.questionText}</strong>
@@ -259,85 +188,68 @@ function buildWrongAnswerCards(answers) {
 function renderResult(result) {
   dom.resultSection.classList.remove('hidden');
   const scoreBadgeClass = result.score >= 80 ? 'green' : result.score >= 60 ? 'primary' : 'amber';
-  const timeline = [
-    `Concept session 创建完成。`,
-    `概念卡已生成，并拉起 quiz。`,
-    `用户提交了 ${result.answers.length} 道题的答案。`,
-    `服务端返回得分 ${result.score}，并更新 mastery 为 ${result.mastery.masteryScore}。`,
-    `下次复习时间：${formatDate(result.mastery.reviewDueAt)}。`
+  const reviewSteps = [
+    `你已经完成这一轮 ${result.conceptTitle} 练习。`,
+    `本轮得分 ${result.score}，当前掌握度更新为 ${result.mastery.masteryScore}。`,
+    `建议下次复习时间：${formatDate(result.mastery.reviewDueAt)}。`
   ];
 
   dom.resultSection.innerHTML = `
     <div class="result-stack">
-      <div class="mastery-hero">
-        <div style="position: relative; width: 110px; height: 110px;">
+      <div class="summary-card mastery-card">
+        <div class="ring-wrap">
           <div class="ring" style="--progress: ${result.mastery.masteryScore};"></div>
           <div class="ring-label">
             <div>
               <div class="ring-score">${result.mastery.masteryScore}</div>
-              <div class="ring-note">Mastery</div>
+              <div class="ring-note">掌握度</div>
             </div>
           </div>
         </div>
         <div>
-          <span class="eyebrow">Result</span>
+          <div class="small-kicker">Summary</div>
           <h4 style="font-size: 28px; margin: 12px 0 6px;">${result.conceptTitle} 学习结果</h4>
-          <p class="muted">这一步已经把答题结果写入 SQLite，并更新了掌握度、review_due_at 和最近学习历史。</p>
+          <p class="muted">这次练习已经记录下来，后面你可以回来看这次结果，也可以按提醒继续复习。</p>
           <div class="meta-row" style="margin-top: 12px;">
-            <span class="badge ${scoreBadgeClass}">当前得分 ${result.score}</span>
+            <span class="badge ${scoreBadgeClass}">本轮得分 ${result.score}</span>
             <span class="mini-pill">完成时间 ${formatDate(result.completedAt)}</span>
           </div>
-          <div class="mastery-bars">
-            <div class="mastery-bar-row">
-              <div class="mastery-bar-top"><span>Quiz score</span><span>${result.score}</span></div>
-              <div class="mastery-bar-track"><div class="mastery-bar-fill" style="width:${result.score}%"></div></div>
+          <div class="bar-group">
+            <div class="bar-row">
+              <div class="bar-top"><span>本轮得分</span><span>${result.score}</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:${result.score}%"></div></div>
             </div>
-            <div class="mastery-bar-row">
-              <div class="mastery-bar-top"><span>Mastery score</span><span>${result.mastery.masteryScore}</span></div>
-              <div class="mastery-bar-track"><div class="mastery-bar-fill" style="width:${result.mastery.masteryScore}%"></div></div>
+            <div class="bar-row">
+              <div class="bar-top"><span>当前掌握度</span><span>${result.mastery.masteryScore}</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:${result.mastery.masteryScore}%"></div></div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="result-hero">
+      <div class="summary-grid">
         <div class="result-card">
-          <span class="eyebrow">Weak points</span>
-          <h4>薄弱点分析</h4>
-          <div class="wrong-answer-list">
-            ${result.weakPoints.map((item) => `<div class="wrong-answer-card"><strong>需要补强</strong><p>${item}</p></div>`).join('')}
+          <div class="small-kicker">What to review</div>
+          <h4>还需要补强的地方</h4>
+          <div class="answer-list">
+            ${result.weakPoints.map((item) => `<div class="answer-card"><strong>建议复习</strong><p>${item}</p></div>`).join('')}
           </div>
         </div>
         <div class="result-card">
-          <span class="eyebrow">Review advice</span>
-          <h4>复习建议</h4>
+          <div class="small-kicker">Next step</div>
+          <h4>下一步建议</h4>
           <p class="card-copy">${result.reviewAdvice}</p>
-          <div class="meta-row" style="margin-top: 12px;">
-            <span class="mini-pill review-chip">下次复习：${formatDate(result.mastery.reviewDueAt)}</span>
-          </div>
-          <ul class="review-timeline">
-            ${timeline.map((item) => `<li>${item}</li>`).join('')}
+          <ul class="result-list">
+            ${reviewSteps.map((item) => `<li>${item}</li>`).join('')}
           </ul>
         </div>
       </div>
 
-      <div class="result-grid">
-        <div class="result-card">
-          <span class="eyebrow">Answer review</span>
-          <h4>错题卡片</h4>
-          <div class="wrong-answer-list">
-            ${buildWrongAnswerCards(result.answers)}
-          </div>
-        </div>
-        <div class="result-card">
-          <span class="eyebrow">System notes</span>
-          <h4>状态流转时间线</h4>
-          <div class="wrong-answer-list">
-            <div class="timeline-pill"><strong>generated</strong><span class="legend">概念卡创建成功</span></div>
-            <div class="timeline-pill"><strong>quiz_in_progress</strong><span class="legend">小测已生成，等待提交</span></div>
-            <div class="timeline-pill"><strong>${result.score >= 70 ? 'completed' : 'needs_review'}</strong><span class="legend">服务端已评分并生成建议</span></div>
-            <div class="timeline-pill"><strong>mastery updated</strong><span class="legend">掌握度与复习时间已写回</span></div>
-          </div>
+      <div class="result-card">
+        <div class="small-kicker">Answer review</div>
+        <h4>题目回顾</h4>
+        <div class="answer-list">
+          ${buildAnswerCards(result.answers)}
         </div>
       </div>
     </div>
@@ -347,10 +259,10 @@ function renderResult(result) {
 function renderHistory(sessions) {
   dom.historyList.innerHTML = sessions.length
     ? sessions.map((item) => `
-      <div class="history-item">
+      <div class="stack-item">
         <strong>${item.conceptTitle}</strong>
-        <p>${item.status} · ${item.score == null ? '未完成' : `得分 ${item.score}`}</p>
-        <p class="mini-meta">创建时间：${formatDate(item.createdAt)}</p>
+        <p>${item.score == null ? '还没完成' : `上次得分 ${item.score}`}</p>
+        <p class="mini-meta">${formatDate(item.createdAt)}</p>
       </div>
     `).join('')
     : '<div class="empty-state">还没有学习记录。</div>';
@@ -359,44 +271,72 @@ function renderHistory(sessions) {
 function renderReviews(reviews) {
   dom.reviewList.innerHTML = reviews.length
     ? reviews.map((item) => `
-      <div class="review-item">
+      <div class="stack-item">
         <strong>${item.conceptTitle}</strong>
-        <p>掌握度 ${item.masteryScore}</p>
-        <p class="mini-meta">到期时间：${formatDate(item.reviewDueAt)}</p>
+        <p>当前掌握度 ${item.masteryScore}</p>
+        <p class="mini-meta">建议复习时间：${formatDate(item.reviewDueAt)}</p>
       </div>
     `).join('')
-    : '<div class="empty-state">当前没有到期复习任务。</div>';
+    : '<div class="empty-state">当前还没有到期复习内容。</div>';
 }
 
 function renderMastery(mastery) {
   dom.masteryList.innerHTML = mastery.length
     ? mastery.map((item) => `
-      <div class="mastery-item">
+      <div class="stack-item">
         <strong>${item.conceptTitle}</strong>
         <p>掌握度 ${item.masteryScore}</p>
         <p class="mini-meta">下次复习：${formatDate(item.reviewDueAt)}</p>
       </div>
     `).join('')
-    : '<div class="empty-state">答题后这里会显示掌握度。</div>';
+    : '<div class="empty-state">完成一轮练习后，这里会显示你的掌握情况。</div>';
 }
 
-async function loadUsers() {
+async function loadCurrentUser() {
+  if (!state.currentUserId) {
+    renderCurrentUser(null);
+    return;
+  }
   const data = await apiFetch('/api/users');
-  renderUserSelect(data.users || [], data.currentUser);
+  renderCurrentUser(data.currentUser);
 }
 
 async function loadDashboard() {
+  if (!state.currentUserId) {
+    renderOverview({ sessions: 0, dueCount: 0, completionRate: 0 });
+    renderHistory([]);
+    renderReviews([]);
+    renderMastery([]);
+    return;
+  }
   const dashboard = await apiFetch('/api/dashboard');
   renderOverview(dashboard.overview || {});
   renderHistory(dashboard.recent || []);
   renderReviews(dashboard.due || []);
   renderMastery(dashboard.mastery || []);
-  if (dashboard.currentUser) renderActiveUser(dashboard.currentUser);
-  renderDatabasePreview(dashboard);
+  if (dashboard.currentUser) renderCurrentUser(dashboard.currentUser);
 }
 
+async function submitLogin() {
+  const name = dom.loginNameInput.value.trim();
+  const email = dom.loginEmailInput.value.trim();
+  if (!name || !email) return;
+  const data = await apiFetch('/api/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({ name, email })
+  });
+  state.currentUserId = data.user.id;
+  localStorage.setItem('conceptCoachUser', state.currentUserId);
+  renderCurrentUser(data.user);
+  setLoginModal(false);
+  await loadDashboard();
+}
 
 async function generateConcept() {
+  if (!state.currentUserId) {
+    setLoginModal(true);
+    return;
+  }
   const concept = dom.conceptInput.value.trim();
   if (!concept) return;
   const data = await apiFetch('/api/concepts/generate', {
@@ -444,33 +384,24 @@ function bindStaticEvents() {
     dom.conceptInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
   dom.loadDashboardBtn.addEventListener('click', async () => {
-    await loadUsers();
+    await loadCurrentUser();
     await loadDashboard();
   });
-  document.querySelectorAll('.chip').forEach((chip) => {
+  document.querySelectorAll('.chip, .starter-trigger').forEach((chip) => {
     chip.addEventListener('click', () => {
       dom.conceptInput.value = chip.dataset.concept;
       generateConcept();
     });
   });
-  dom.userSelect.addEventListener('change', async (event) => {
-    state.currentUserId = event.target.value;
-    localStorage.setItem('conceptCoachUser', state.currentUserId);
-    dom.conceptSection.classList.add('hidden');
-    dom.quizSection.classList.add('hidden');
-    dom.resultSection.classList.add('hidden');
-    state.sessionId = null;
-    state.questions = [];
-    state.answers = {};
-    state.result = null;
-    await loadUsers();
-    await loadDashboard();
-  });
+  dom.openLoginBtn.addEventListener('click', () => setLoginModal(true));
+  dom.closeLoginBtn.addEventListener('click', () => setLoginModal(false));
+  dom.closeLoginBackdrop.addEventListener('click', () => setLoginModal(false));
+  dom.submitLoginBtn.addEventListener('click', submitLogin);
 }
 
 (async function init() {
   bindStaticEvents();
-  renderSchema();
-  await loadUsers();
+  await loadCurrentUser();
   await loadDashboard();
+  if (!state.currentUserId) setLoginModal(true);
 })();
