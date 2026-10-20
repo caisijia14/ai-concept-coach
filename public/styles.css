@@ -270,6 +270,54 @@ input { outline: none; }
   display: grid;
   gap: 18px;
 }
+
+.sidebar-sticky {
+  position: sticky;
+  top: 18px;
+  display: grid;
+  gap: 18px;
+}
+.side-overview {
+  background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,251,248,0.92));
+}
+.sidebar-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.summary-pill {
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.86);
+  padding: 12px;
+}
+.summary-pill strong {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 4px;
+  letter-spacing: -0.04em;
+}
+.split-side-card {
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+}
+.mini-panel {
+  display: grid;
+  gap: 10px;
+}
+.divider-top {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.compact-list {
+  gap: 8px;
+}
+.compact-list .stack-item {
+  padding: 12px;
+  border-radius: 16px;
+}
 .input-row {
   display: grid;
   grid-template-columns: 1fr 120px;
@@ -571,8 +619,12 @@ input { outline: none; }
   .result-grid,
   .mastery-card,
   .input-row,
-  .paths-grid {
+  .paths-grid,
+  .sidebar-summary {
     grid-template-columns: 1fr;
+  }
+  .sidebar-sticky {
+    position: static;
   }
   .header-actions,
   .site-header {
