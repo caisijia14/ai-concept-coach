@@ -94,6 +94,22 @@ function formatDate(value) {
   return new Date(value).toLocaleString('zh-CN');
 }
 
+
+function resetWorkspaceView() {
+  state.concept = null;
+  state.sessionId = null;
+  state.questions = [];
+  state.answers = {};
+  state.result = null;
+  dom.conceptSection.innerHTML = '';
+  dom.quizSection.innerHTML = '';
+  dom.resultSection.innerHTML = '';
+  dom.conceptSection.classList.add('hidden');
+  dom.quizSection.classList.add('hidden');
+  dom.resultSection.classList.add('hidden');
+}
+
+
 function setLoginModal(open) {
   dom.loginModal.classList.toggle('hidden', !open);
 }
@@ -341,6 +357,7 @@ function renderMastery(mastery) {
 async function loadCurrentUser() {
   if (!state.currentUserId) {
     renderCurrentUser(null);
+    resetWorkspaceView();
     return;
   }
   const data = await apiFetch('/api/users');
@@ -375,6 +392,7 @@ async function submitLogin() {
   localStorage.setItem('conceptCoachUser', state.currentUserId);
   renderCurrentUser(data.user);
   setLoginModal(false);
+  resetWorkspaceView();
   await loadDashboard();
 }
 
@@ -385,17 +403,13 @@ async function generateConcept() {
   }
   const concept = dom.conceptInput.value.trim();
   if (!concept) return;
+  resetWorkspaceView();
   const data = await apiFetch('/api/concepts/generate', {
     method: 'POST',
     body: JSON.stringify({ concept })
   });
   state.concept = data.concept;
   state.sessionId = data.sessionId;
-  state.questions = [];
-  state.answers = {};
-  state.result = null;
-  dom.quizSection.classList.add('hidden');
-  dom.resultSection.classList.add('hidden');
   renderConcept(data.concept);
   await loadDashboard();
 }
@@ -450,6 +464,7 @@ function bindStaticEvents() {
 
 (async function init() {
   bindStaticEvents();
+  resetWorkspaceView();
   await loadCurrentUser();
   await loadDashboard();
   if (!state.currentUserId) setLoginModal(true);
