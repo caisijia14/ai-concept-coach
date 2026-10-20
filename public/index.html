@@ -42,23 +42,55 @@
           </div>
         </div>
         <div class="starter-list">
-          <button class="starter-item starter-trigger" data-concept="RAG">
+          <button class="starter-item starter-trigger" data-concept="MCP">
             <strong>MCP</strong>
             <span>理解模型如何更稳定地接入外部工具和上下文。</span>
           </button>
-          <button class="starter-item starter-trigger" data-concept="Transformer">
+          <button class="starter-item starter-trigger" data-concept="AI Agents">
             <strong>AI Agents</strong>
             <span>理解多步规划、工具调用和执行闭环。</span>
           </button>
-          <button class="starter-item starter-trigger" data-concept="RL-HF">
+          <button class="starter-item starter-trigger" data-concept="Evals">
             <strong>Evals</strong>
             <span>理解模型和 AI 应用为什么需要系统性评估。</span>
           </button>
         </div>
+
+        <div class="snapshot-panel">
+          <div class="panel-head compact-head">
+            <div>
+              <div class="small-kicker">Learning snapshot</div>
+              <h4>学习概览</h4>
+            </div>
+          </div>
+
+          <div class="snapshot-grid">
+            <section>
+              <div class="small-kicker">Recent</div>
+              <div id="historyList" class="stack-list compact-list">
+                <div class="empty-state">登录后，这里会记录你的学习历史。</div>
+              </div>
+            </section>
+
+            <section>
+              <div class="small-kicker">Review</div>
+              <div id="reviewList" class="stack-list compact-list">
+                <div class="empty-state">当前还没有到期复习内容。</div>
+              </div>
+            </section>
+
+            <section>
+              <div class="small-kicker">Progress</div>
+              <div id="masteryList" class="stack-list compact-list">
+                <div class="empty-state">完成一轮练习后，这里会显示你的掌握情况。</div>
+              </div>
+            </section>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="main-layout">
+    <section class="main-layout single-column-layout">
       <main class="workspace card">
         <div class="panel-head workspace-head">
           <div>
@@ -127,44 +159,6 @@
         <section id="quizSection" class="hidden"></section>
         <section id="resultSection" class="hidden"></section>
       </main>
-
-      <aside class="sidebar">
-        <section class="card side-card">
-          <div class="panel-head compact-head">
-            <div>
-              <div class="small-kicker">Recent</div>
-              <h4>最近学习</h4>
-            </div>
-          </div>
-          <div id="historyList" class="stack-list">
-            <div class="empty-state">登录后，这里会记录你的学习历史。</div>
-          </div>
-        </section>
-
-        <section class="card side-card">
-          <div class="panel-head compact-head">
-            <div>
-              <div class="small-kicker">Review</div>
-              <h4>待复习</h4>
-            </div>
-          </div>
-          <div id="reviewList" class="stack-list">
-            <div class="empty-state">当前还没有待复习内容。</div>
-          </div>
-        </section>
-
-        <section class="card side-card">
-          <div class="panel-head compact-head">
-            <div>
-              <div class="small-kicker">Progress</div>
-              <h4>掌握情况</h4>
-            </div>
-          </div>
-          <div id="masteryList" class="stack-list">
-            <div class="empty-state">完成一轮练习后，这里会显示你的掌握情况。</div>
-          </div>
-        </section>
-      </aside>
     </section>
   </div>
 

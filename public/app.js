@@ -134,20 +134,6 @@ function renderCurrentUser(user) {
 }
 
 
-function renderSidebarSummary(overview = {}) {
-  const cards = [
-    { label: '学习次数', value: overview.sessions ?? 0 },
-    { label: '待复习', value: overview.dueCount ?? 0 },
-    { label: '完成率', value: `${overview.completionRate ?? 0}%` }
-  ];
-  dom.sidebarSummary.innerHTML = cards.map((item) => `
-    <div class="summary-pill">
-      <strong>${item.value}</strong>
-      <span class="mini-meta">${item.label}</span>
-    </div>
-  `).join('');
-}
-
 function renderOverview(overview = {}) {
   const cards = [
     { label: '学习次数', value: overview.sessions ?? 0, note: '最近学习记录' },
@@ -383,7 +369,6 @@ async function loadCurrentUser() {
 async function loadDashboard() {
   if (!state.currentUserId) {
     renderOverview({ sessions: 0, dueCount: 0, completionRate: 0 });
-    renderSidebarSummary({ sessions: 0, dueCount: 0, completionRate: 0 });
     renderHistory([]);
     renderReviews([]);
     renderMastery([]);
@@ -391,7 +376,6 @@ async function loadDashboard() {
   }
   const dashboard = await apiFetch('/api/dashboard');
   renderOverview(dashboard.overview || {});
-  renderSidebarSummary(dashboard.overview || {});
   renderHistory(dashboard.recent || []);
   renderReviews(dashboard.due || []);
   renderMastery(dashboard.mastery || []);
