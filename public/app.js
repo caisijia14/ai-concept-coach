@@ -321,38 +321,41 @@ function renderResult(result) {
 }
 
 function renderHistory(sessions) {
-  dom.historyList.innerHTML = sessions.length
-    ? sessions.map((item) => `
+  const preview = sessions.slice(0, 2);
+  dom.historyList.innerHTML = preview.length
+    ? preview.map((item) => `
       <div class="stack-item">
         <strong>${item.conceptTitle}</strong>
         <p>${item.score == null ? '还没完成' : `上次得分 ${item.score}`}</p>
         <p class="mini-meta">${formatDate(item.createdAt)}</p>
       </div>
-    `).join('')
+    `).join('') + (sessions.length > 2 ? `<p class="snapshot-section-note">还有 ${sessions.length - 2} 条记录未展开</p>` : '')
     : '<div class="empty-state">还没有学习记录。</div>';
 }
 
 function renderReviews(reviews) {
-  dom.reviewList.innerHTML = reviews.length
-    ? reviews.map((item) => `
+  const preview = reviews.slice(0, 2);
+  dom.reviewList.innerHTML = preview.length
+    ? preview.map((item) => `
       <div class="stack-item">
         <strong>${item.conceptTitle}</strong>
-        <p>当前掌握度 ${item.masteryScore}</p>
-        <p class="mini-meta">建议复习时间：${formatDate(item.reviewDueAt)}</p>
+        <p>掌握度 ${item.masteryScore}</p>
+        <p class="mini-meta">${formatDate(item.reviewDueAt)}</p>
       </div>
-    `).join('')
+    `).join('') + (reviews.length > 2 ? `<p class="snapshot-section-note">还有 ${reviews.length - 2} 条待复习内容</p>` : '')
     : '<div class="empty-state">当前还没有到期复习内容。</div>';
 }
 
 function renderMastery(mastery) {
-  dom.masteryList.innerHTML = mastery.length
-    ? mastery.map((item) => `
+  const preview = mastery.slice(0, 2);
+  dom.masteryList.innerHTML = preview.length
+    ? preview.map((item) => `
       <div class="stack-item">
         <strong>${item.conceptTitle}</strong>
         <p>掌握度 ${item.masteryScore}</p>
         <p class="mini-meta">下次复习：${formatDate(item.reviewDueAt)}</p>
       </div>
-    `).join('')
+    `).join('') + (mastery.length > 2 ? `<p class="snapshot-section-note">还有 ${mastery.length - 2} 个概念在学习中</p>` : '')
     : '<div class="empty-state">完成一轮练习后，这里会显示你的掌握情况。</div>';
 }
 
