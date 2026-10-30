@@ -20,6 +20,7 @@ const learningPaths = {
 function renderPathPreview(pathKey) {
   const concepts = learningPaths[pathKey] || [];
   if (!concepts.length) return;
+  dom.emptyWorkspaceState.classList.add('hidden');
   dom.conceptSection.classList.remove('hidden');
   dom.quizSection.classList.add('hidden');
   dom.resultSection.classList.add('hidden');
@@ -62,6 +63,7 @@ const dom = {
   conceptSection: document.getElementById('conceptSection'),
   quizSection: document.getElementById('quizSection'),
   resultSection: document.getElementById('resultSection'),
+  emptyWorkspaceState: document.getElementById('emptyWorkspaceState'),
   historyList: document.getElementById('historyList'),
   reviewList: document.getElementById('reviewList'),
   masteryList: document.getElementById('masteryList'),
@@ -120,6 +122,7 @@ function resetWorkspaceView() {
   dom.conceptSection.classList.add('hidden');
   dom.quizSection.classList.add('hidden');
   dom.resultSection.classList.add('hidden');
+  dom.emptyWorkspaceState.classList.remove('hidden');
 }
 
 
@@ -162,6 +165,7 @@ function renderOverview(overview = {}) {
 }
 
 function renderConcept(concept) {
+  dom.emptyWorkspaceState.classList.add('hidden');
   dom.conceptSection.classList.remove('hidden');
   dom.conceptSection.innerHTML = `
     <div class="concept-panel">
@@ -200,6 +204,7 @@ function renderConcept(concept) {
 }
 
 function renderQuiz(questions, conceptTitle) {
+  dom.emptyWorkspaceState.classList.add('hidden');
   dom.quizSection.classList.remove('hidden');
   dom.quizSection.innerHTML = `
     <div class="quiz-shell">
@@ -262,6 +267,7 @@ function buildAnswerCards(answers) {
 }
 
 function renderResult(result) {
+  dom.emptyWorkspaceState.classList.add('hidden');
   dom.resultSection.classList.remove('hidden');
   const scoreBadgeClass = result.score >= 80 ? 'green' : result.score >= 60 ? 'primary' : 'amber';
   const reviewSteps = [
