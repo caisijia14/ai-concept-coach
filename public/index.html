@@ -64,23 +64,26 @@
             </div>
           </div>
 
-          <div class="snapshot-grid">
-            <section>
-              <div class="small-kicker">Recent</div>
+          <div class="snapshot-tabs">
+            <button class="snapshot-tab active" data-tab="recent">最近学习</button>
+            <button class="snapshot-tab" data-tab="review">待复习</button>
+            <button class="snapshot-tab" data-tab="progress">掌握情况</button>
+          </div>
+
+          <div class="snapshot-panels">
+            <section class="snapshot-panel-body active" data-panel="recent">
               <div id="historyList" class="stack-list compact-list">
                 <div class="empty-state">登录后，这里会记录你的学习历史。</div>
               </div>
             </section>
 
-            <section>
-              <div class="small-kicker">Review</div>
+            <section class="snapshot-panel-body" data-panel="review">
               <div id="reviewList" class="stack-list compact-list">
                 <div class="empty-state">当前还没有到期复习内容。</div>
               </div>
             </section>
 
-            <section>
-              <div class="small-kicker">Progress</div>
+            <section class="snapshot-panel-body" data-panel="progress">
               <div id="masteryList" class="stack-list compact-list">
                 <div class="empty-state">完成一轮练习后，这里会显示你的掌握情况。</div>
               </div>

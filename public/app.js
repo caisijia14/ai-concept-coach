@@ -77,6 +77,18 @@ const dom = {
   loginEmailInput: document.getElementById('loginEmailInput')
 };
 
+
+function bindSnapshotTabs() {
+  const tabs = document.querySelectorAll('.snapshot-tab');
+  const panels = document.querySelectorAll('.snapshot-panel-body');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((item) => item.classList.toggle('active', item === tab));
+      panels.forEach((panel) => panel.classList.toggle('active', panel.dataset.panel === tab.dataset.tab));
+    });
+  });
+}
+
 async function apiFetch(url, options = {}) {
   const response = await fetch(url, {
     headers: {
@@ -469,6 +481,7 @@ function bindStaticEvents() {
 
 (async function init() {
   bindStaticEvents();
+  bindSnapshotTabs();
   resetWorkspaceView();
   await loadCurrentUser();
   await loadDashboard();
