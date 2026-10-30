@@ -35,10 +35,9 @@ button, input {
 input { outline: none; }
 .hidden { display: none !important; }
 .page-shell {
-  width: calc(100vw - 24px);
-  max-width: none;
+  width: min(96vw, 1680px);
   margin: 0 auto;
-  padding: 12px;
+  padding: 18px;
 }
 .card {
   background: rgba(255, 255, 255, 0.92);
@@ -49,9 +48,9 @@ input { outline: none; }
 .site-header {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  gap: 18px;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
 }
 .brand-block {
   display: flex;
@@ -71,7 +70,7 @@ input { outline: none; }
 }
 .brand-block h1 {
   margin: 0;
-  font-size: 25px;
+  font-size: 26px;
   letter-spacing: -0.04em;
   font-family: "SF Pro Display", "Avenir Next", "PingFang SC", sans-serif;
 }
@@ -111,10 +110,10 @@ input { outline: none; }
 }
 .hero-grid-wide {
   display: grid;
-  grid-template-columns: minmax(0, 1.75fr) minmax(280px, 0.62fr) minmax(280px, 0.62fr);
-  gap: 16px;
+  grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.58fr) minmax(260px, 0.58fr);
+  gap: 18px;
   align-items: stretch;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 .hero-copy {
   min-height: 100%;
@@ -126,7 +125,7 @@ input { outline: none; }
 .quick-start,
 .workspace,
 .snapshot-panel {
-  padding: 18px;
+  padding: 20px;
 }
 .section-tag,
 .small-kicker {
@@ -143,21 +142,21 @@ input { outline: none; }
 }
 .hero-copy h2 {
   margin: 10px 0 12px;
-  font-size: clamp(30px, 2.6vw, 46px);
-  line-height: 1.04;
-  letter-spacing: -0.04em;
-  max-width: 980px;
+  font-size: clamp(34px, 2.9vw, 50px);
+  line-height: 1.06;
+  letter-spacing: -0.045em;
+  max-width: none;
   font-family: "SF Pro Display", "Avenir Next", "PingFang SC", sans-serif;
 }
 .hero-copy p {
-  max-width: 920px;
-  font-size: 14px;
+  max-width: none;
+  font-size: 15px;
 }
 .hero-actions {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-top: 16px;
+  margin-top: 18px;
 }
 .btn {
   border: 1px solid transparent;
@@ -189,11 +188,11 @@ input { outline: none; }
 .stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 16px;
+  gap: 12px;
+  margin-top: 18px;
 }
 .stat {
-  padding: 12px;
+  padding: 14px;
   border-radius: 18px;
   border: 1px solid var(--line);
   background: rgba(255,255,255,0.82);
@@ -320,7 +319,7 @@ input { outline: none; }
 .main-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 14px;
 }
 .single-column-layout {
   grid-template-columns: 1fr;
@@ -357,7 +356,7 @@ input { outline: none; }
 .workspace {
   display: grid;
   gap: 14px;
-  min-height: 64vh;
+  min-height: 56vh;
 }
 .workspace-head p {
   margin-top: 8px;
@@ -647,29 +646,26 @@ input { outline: none; }
   font-size: 22px;
   line-height: 1;
 }
-@media (max-width: 1280px) {
-  .hero-row {
-    grid-template-columns: 1fr 340px;
+
+@media (max-width: 1440px) {
+  .hero-grid-wide {
+    grid-template-columns: minmax(0, 1.5fr) minmax(250px, 0.65fr) minmax(250px, 0.65fr);
   }
-  .main-layout {
-    grid-template-columns: minmax(0, 1fr) 320px;
+  .hero-copy h2 {
+    font-size: clamp(32px, 2.5vw, 44px);
   }
 }
-@media (max-width: 1120px) {
+@media (max-width: 1180px) {
   .site-header,
-  .hero-row,
-  .main-layout,
+  .hero-grid-wide,
   .content-grid,
   .summary-grid,
   .result-grid,
   .mastery-card,
   .input-row,
   .paths-grid,
-  .sidebar-summary {
+  .empty-state-grid {
     grid-template-columns: 1fr;
-  }
-  .sidebar-sticky {
-    position: static;
   }
   .header-actions,
   .site-header {
@@ -677,12 +673,12 @@ input { outline: none; }
   }
 }
 @media (max-width: 720px) {
-  .page-shell { padding: 12px; }
+  .page-shell { padding: 12px; width: calc(100vw - 12px); }
   .hero-copy,
   .quick-start,
   .workspace,
-  .side-card,
-  .modal-card { padding: 18px; }
+  .snapshot-panel,
+  .modal-card { padding: 16px; }
   .stats-row { grid-template-columns: 1fr; }
   .brand-block { align-items: flex-start; }
   .header-actions {
