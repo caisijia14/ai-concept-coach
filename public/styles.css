@@ -108,12 +108,19 @@ input { outline: none; }
   margin-bottom: 2px;
   font-size: 14px;
 }
-.hero-row {
+.app-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.9fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.72fr);
   gap: 20px;
-  margin-bottom: 20px;
   align-items: start;
+}
+.main-column,
+.right-column {
+  display: grid;
+  gap: 20px;
+}
+.hero-row {
+  display: block;
 }
 .hero-side-grid {
   display: grid;

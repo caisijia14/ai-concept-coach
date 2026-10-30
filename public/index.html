@@ -22,20 +22,122 @@
       </div>
     </header>
 
-    <section class="hero-row">
-      <div class="hero-copy card">
-        <div class="section-tag">AI concept learning</div>
-        <h2>把复杂概念拆成更容易理解、练习和复习的学习过程。</h2>
-        <p>输入一个概念，先读懂它，再做一轮小测，最后把结果变成下一次复习的起点。</p>
-        <div class="hero-actions">
-          <button class="btn btn-primary" id="jumpGenerateBtn">开始学习</button>
-          <button class="btn btn-secondary" id="loadDashboardBtn">刷新页面</button>
-        </div>
-        <div id="overviewStats" class="stats-row"></div>
+    <section class="app-layout">
+      <div class="main-column">
+        <section class="hero-row">
+          <div class="hero-copy card">
+            <div class="section-tag">AI concept learning</div>
+            <h2>把复杂概念拆成更容易理解、练习和复习的学习过程。</h2>
+            <p>输入一个概念，先读懂它，再做一轮小测，最后把结果变成下一次复习的起点。</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" id="jumpGenerateBtn">开始学习</button>
+              <button class="btn btn-secondary" id="loadDashboardBtn">刷新页面</button>
+            </div>
+            <div id="overviewStats" class="stats-row"></div>
+          </div>
+        </section>
+
+        <section class="main-layout single-column-layout">
+          <main class="workspace card">
+            <div class="panel-head workspace-head">
+              <div>
+                <div class="small-kicker">Workspace</div>
+                <h3>概念学习区</h3>
+                <p>先输入概念，再开始一轮学习。</p>
+              </div>
+            </div>
+
+            <div class="input-row">
+              <input id="conceptInput" type="text" placeholder="输入一个 AI 概念，例如：RAG、Transformer、RL-HF" />
+              <button class="btn btn-primary" id="generateBtn">开始</button>
+            </div>
+
+            <div class="concept-group-block">
+              <div class="small-kicker">Classic concepts</div>
+              <div class="chip-row">
+                <button class="chip" data-concept="RAG">RAG</button>
+                <button class="chip" data-concept="MCP">MCP</button>
+                <button class="chip" data-concept="AI Agents">AI Agents</button>
+                <button class="chip" data-concept="Evals">Evals</button>
+                <button class="chip" data-concept="机器学习">机器学习</button>
+                <button class="chip" data-concept="Function Calling">Function Calling</button>
+                <button class="chip" data-concept="MoE">MoE</button>
+              </div>
+            </div>
+
+            <div class="new-concepts-block concept-group-block">
+              <div class="small-kicker">New concepts</div>
+              <div class="chip-row secondary-row">
+                <button class="chip subtle-chip" data-concept="LoRA">LoRA</button>
+                <button class="chip subtle-chip" data-concept="Embeddings">Embeddings</button>
+                <button class="chip subtle-chip" data-concept="Context Window">Context Window</button>
+                <button class="chip subtle-chip" data-concept="Guardrails">Guardrails</button>
+                <button class="chip subtle-chip" data-concept="Multimodal">Multimodal</button>
+              </div>
+            </div>
+
+            <div class="learning-paths-block">
+              <div class="small-kicker">Learning paths</div>
+              <div class="paths-grid">
+                <button class="path-card path-trigger" data-path="foundations">
+                  <strong>Foundations</strong>
+                  <span>机器学习、Transformer、Embeddings</span>
+                </button>
+                <button class="path-card path-trigger" data-path="llm-systems">
+                  <strong>LLM Systems</strong>
+                  <span>RAG、Context Window、Multimodal</span>
+                </button>
+                <button class="path-card path-trigger" data-path="agents-tools">
+                  <strong>Agents & Tools</strong>
+                  <span>AI Agents、Function Calling、MCP</span>
+                </button>
+                <button class="path-card path-trigger" data-path="safety-eval">
+                  <strong>Safety & Eval</strong>
+                  <span>Guardrails、Evals、RL-HF</span>
+                </button>
+                <button class="path-card path-trigger" data-path="customization">
+                  <strong>Customization</strong>
+                  <span>LoRA、MoE、RL-HF</span>
+                </button>
+              </div>
+            </div>
+
+            <section id="emptyWorkspaceState" class="workspace-empty-state">
+              <div class="empty-state-card">
+                <div class="small-kicker">Start here</div>
+                <h4>先选一个概念，开始今天的学习。</h4>
+                <p>你可以从上面的经典概念、新概念或学习路径中任选一个开始。进入练习后，页面会继续向下展开，你可以直接滚动完成整轮学习。</p>
+              </div>
+              <div class="empty-state-grid">
+                <div class="empty-state-card">
+                  <h4>建议顺序</h4>
+                  <ul class="result-list">
+                    <li>先读懂概念的通俗解释</li>
+                    <li>再看技术解释和类比</li>
+                    <li>最后做一轮小测确认是否真的掌握</li>
+                  </ul>
+                </div>
+                <div class="empty-state-card">
+                  <h4>适合开始的主题</h4>
+                  <ul class="result-list">
+                    <li>想补基础：机器学习 / Transformer</li>
+                    <li>想学系统：RAG / Context Window</li>
+                    <li>想学新趋势：Agents / MCP / Guardrails</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <section id="conceptSection" class="hidden"></section>
+            <section id="quizSection" class="hidden"></section>
+            <section id="resultSection" class="hidden"></section>
+          </main>
+        </section>
       </div>
 
-      <div class="hero-side-grid">
-        <div class="quick-start card hero-side-card">
+      <aside class="right-column">
+        <div class="hero-side-grid">
+          <div class="quick-start card hero-side-card">
           <div class="panel-head">
             <div>
               <div class="small-kicker">Quick start</div>
@@ -92,104 +194,7 @@
             </section>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="main-layout single-column-layout">
-      <main class="workspace card">
-        <div class="panel-head workspace-head">
-          <div>
-            <div class="small-kicker">Workspace</div>
-            <h3>概念学习区</h3>
-            <p>先输入概念，再开始一轮学习。</p>
-          </div>
-        </div>
-
-        <div class="input-row">
-          <input id="conceptInput" type="text" placeholder="输入一个 AI 概念，例如：RAG、Transformer、RL-HF" />
-          <button class="btn btn-primary" id="generateBtn">开始</button>
-        </div>
-
-        <div class="concept-group-block">
-          <div class="small-kicker">Classic concepts</div>
-          <div class="chip-row">
-            <button class="chip" data-concept="RAG">RAG</button>
-            <button class="chip" data-concept="MCP">MCP</button>
-            <button class="chip" data-concept="AI Agents">AI Agents</button>
-            <button class="chip" data-concept="Evals">Evals</button>
-            <button class="chip" data-concept="机器学习">机器学习</button>
-            <button class="chip" data-concept="Function Calling">Function Calling</button>
-            <button class="chip" data-concept="MoE">MoE</button>
-          </div>
-        </div>
-
-        <div class="new-concepts-block concept-group-block">
-          <div class="small-kicker">New concepts</div>
-          <div class="chip-row secondary-row">
-            <button class="chip subtle-chip" data-concept="LoRA">LoRA</button>
-            <button class="chip subtle-chip" data-concept="Embeddings">Embeddings</button>
-            <button class="chip subtle-chip" data-concept="Context Window">Context Window</button>
-            <button class="chip subtle-chip" data-concept="Guardrails">Guardrails</button>
-            <button class="chip subtle-chip" data-concept="Multimodal">Multimodal</button>
-          </div>
-        </div>
-
-        <div class="learning-paths-block">
-          <div class="small-kicker">Learning paths</div>
-          <div class="paths-grid">
-            <button class="path-card path-trigger" data-path="foundations">
-              <strong>Foundations</strong>
-              <span>机器学习、Transformer、Embeddings</span>
-            </button>
-            <button class="path-card path-trigger" data-path="llm-systems">
-              <strong>LLM Systems</strong>
-              <span>RAG、Context Window、Multimodal</span>
-            </button>
-            <button class="path-card path-trigger" data-path="agents-tools">
-              <strong>Agents & Tools</strong>
-              <span>AI Agents、Function Calling、MCP</span>
-            </button>
-            <button class="path-card path-trigger" data-path="safety-eval">
-              <strong>Safety & Eval</strong>
-              <span>Guardrails、Evals、RL-HF</span>
-            </button>
-            <button class="path-card path-trigger" data-path="customization">
-              <strong>Customization</strong>
-              <span>LoRA、MoE、RL-HF</span>
-            </button>
-          </div>
-        </div>
-
-        <section id="emptyWorkspaceState" class="workspace-empty-state">
-          <div class="empty-state-card">
-            <div class="small-kicker">Start here</div>
-            <h4>先选一个概念，开始今天的学习。</h4>
-            <p>你可以从上面的经典概念、新概念或学习路径中任选一个开始。进入练习后，页面会继续向下展开，你可以直接滚动完成整轮学习。</p>
-          </div>
-          <div class="empty-state-grid">
-            <div class="empty-state-card">
-              <h4>建议顺序</h4>
-              <ul class="result-list">
-                <li>先读懂概念的通俗解释</li>
-                <li>再看技术解释和类比</li>
-                <li>最后做一轮小测确认是否真的掌握</li>
-              </ul>
-            </div>
-            <div class="empty-state-card">
-              <h4>适合开始的主题</h4>
-              <ul class="result-list">
-                <li>想补基础：机器学习 / Transformer</li>
-                <li>想学系统：RAG / Context Window</li>
-                <li>想学新趋势：Agents / MCP / Guardrails</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section id="conceptSection" class="hidden"></section>
-        <section id="quizSection" class="hidden"></section>
-        <section id="resultSection" class="hidden"></section>
-      </main>
+      </aside>
     </section>
   </div>
 
