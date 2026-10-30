@@ -35,9 +35,9 @@ button, input {
 input { outline: none; }
 .hidden { display: none !important; }
 .page-shell {
-  width: min(96vw, 1720px);
+  width: min(100vw - 28px, 1980px);
   margin: 0 auto;
-  padding: clamp(16px, 2vw, 28px);
+  padding: 14px;
 }
 .card {
   background: rgba(255, 255, 255, 0.92);
@@ -48,9 +48,9 @@ input { outline: none; }
 .site-header {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
   align-items: center;
-  margin-bottom: 22px;
+  margin-bottom: 14px;
 }
 .brand-block {
   display: flex;
@@ -110,22 +110,29 @@ input { outline: none; }
 }
 .app-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.72fr);
-  gap: 20px;
+  grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.72fr);
+  gap: 16px;
   align-items: start;
 }
 .main-column,
 .right-column {
   display: grid;
-  gap: 20px;
+  gap: 14px;
 }
 .hero-row {
   display: block;
 }
+.hero-copy {
+  min-height: 100%;
+}
 .hero-side-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 12px;
+}
+.quick-start,
+.snapshot-panel {
+  align-self: start;
 }
 .hero-side-card {
   height: 100%;
@@ -135,7 +142,7 @@ input { outline: none; }
 .workspace,
 .side-card,
 .snapshot-panel {
-  padding: 26px;
+  padding: 18px;
 }
 .section-tag,
 .small-kicker {
@@ -151,22 +158,22 @@ input { outline: none; }
   text-transform: uppercase;
 }
 .hero-copy h2 {
-  margin: 14px 0 14px;
-  font-size: clamp(28px, 3vw, 44px);
+  margin: 10px 0 12px;
+  font-size: clamp(26px, 2.4vw, 40px);
   line-height: 1.08;
-  letter-spacing: -0.045em;
-  max-width: 860px;
+  letter-spacing: -0.04em;
+  max-width: 960px;
   font-family: "SF Pro Display", "Avenir Next", "PingFang SC", sans-serif;
 }
 .hero-copy p {
-  max-width: 760px;
-  font-size: 15px;
+  max-width: 920px;
+  font-size: 14px;
 }
 .hero-actions {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-top: 22px;
+  margin-top: 16px;
 }
 .btn {
   border: 1px solid transparent;
@@ -198,12 +205,12 @@ input { outline: none; }
 .stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 22px;
+  gap: 10px;
+  margin-top: 16px;
 }
 .stat {
-  padding: 14px;
-  border-radius: 20px;
+  padding: 12px;
+  border-radius: 18px;
   border: 1px solid var(--line);
   background: rgba(255,255,255,0.82);
 }
@@ -260,7 +267,7 @@ input { outline: none; }
 .concept-panel,
 .result-card,
 .path-card {
-  padding: 14px;
+  padding: 12px;
 }
 .starter-item {
   width: 100%;
@@ -329,7 +336,7 @@ input { outline: none; }
 .main-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 14px;
 }
 .single-column-layout {
   grid-template-columns: 1fr;
@@ -339,6 +346,7 @@ input { outline: none; }
   display: grid;
   gap: 12px;
   margin-top: 4px;
+  min-height: 260px;
 }
 .empty-state-grid {
   display: grid;
@@ -346,10 +354,10 @@ input { outline: none; }
   gap: 12px;
 }
 .empty-state-card {
-  border-radius: 20px;
+  border-radius: 18px;
   border: 1px solid var(--line);
   background: rgba(255,255,255,0.84);
-  padding: 18px;
+  padding: 16px;
 }
 .empty-state-card h4 {
   margin: 10px 0 8px;
@@ -364,8 +372,8 @@ input { outline: none; }
 
 .workspace {
   display: grid;
-  gap: 16px;
-  min-height: 72vh;
+  gap: 14px;
+  min-height: 58vh;
 }
 .workspace-head p {
   margin-top: 8px;
