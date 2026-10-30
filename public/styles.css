@@ -35,9 +35,10 @@ button, input {
 input { outline: none; }
 .hidden { display: none !important; }
 .page-shell {
-  width: min(100vw - 28px, 1980px);
+  width: calc(100vw - 24px);
+  max-width: none;
   margin: 0 auto;
-  padding: 14px;
+  padding: 12px;
 }
 .card {
   background: rgba(255, 255, 255, 0.92);
@@ -50,7 +51,7 @@ input { outline: none; }
   justify-content: space-between;
   gap: 16px;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 .brand-block {
   display: flex;
@@ -108,31 +109,15 @@ input { outline: none; }
   margin-bottom: 2px;
   font-size: 14px;
 }
-.app-layout {
+.hero-grid-wide {
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.72fr);
+  grid-template-columns: minmax(0, 1.75fr) minmax(280px, 0.62fr) minmax(280px, 0.62fr);
   gap: 16px;
-  align-items: start;
-}
-.main-column,
-.right-column {
-  display: grid;
-  gap: 14px;
-}
-.hero-row {
-  display: block;
+  align-items: stretch;
+  margin-bottom: 16px;
 }
 .hero-copy {
   min-height: 100%;
-}
-.hero-side-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.quick-start,
-.snapshot-panel {
-  align-self: start;
 }
 .hero-side-card {
   height: 100%;
@@ -140,7 +125,6 @@ input { outline: none; }
 .hero-copy,
 .quick-start,
 .workspace,
-.side-card,
 .snapshot-panel {
   padding: 18px;
 }
@@ -159,10 +143,10 @@ input { outline: none; }
 }
 .hero-copy h2 {
   margin: 10px 0 12px;
-  font-size: clamp(26px, 2.4vw, 40px);
-  line-height: 1.08;
+  font-size: clamp(30px, 2.6vw, 46px);
+  line-height: 1.04;
   letter-spacing: -0.04em;
-  max-width: 960px;
+  max-width: 980px;
   font-family: "SF Pro Display", "Avenir Next", "PingFang SC", sans-serif;
 }
 .hero-copy p {
@@ -336,7 +320,7 @@ input { outline: none; }
 .main-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 14px;
+  gap: 12px;
 }
 .single-column-layout {
   grid-template-columns: 1fr;
@@ -373,7 +357,7 @@ input { outline: none; }
 .workspace {
   display: grid;
   gap: 14px;
-  min-height: 58vh;
+  min-height: 64vh;
 }
 .workspace-head p {
   margin-top: 8px;

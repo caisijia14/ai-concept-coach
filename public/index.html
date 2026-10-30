@@ -22,23 +22,79 @@
       </div>
     </header>
 
-    <section class="app-layout">
-      <div class="main-column">
-        <section class="hero-row">
-          <div class="hero-copy card">
-            <div class="section-tag">AI concept learning</div>
-            <h2>把复杂概念拆成更容易理解、练习和复习的学习过程。</h2>
-            <p>输入一个概念，先读懂它，再做一轮小测，最后把结果变成下一次复习的起点。</p>
-            <div class="hero-actions">
-              <button class="btn btn-primary" id="jumpGenerateBtn">开始学习</button>
-              <button class="btn btn-secondary" id="loadDashboardBtn">刷新页面</button>
-            </div>
-            <div id="overviewStats" class="stats-row"></div>
-          </div>
-        </section>
+    <section class="hero-grid-wide">
+      <div class="hero-copy card">
+        <div class="section-tag">AI concept learning</div>
+        <h2>把复杂概念拆成更容易理解、练习和复习的学习过程。</h2>
+        <p>输入一个概念，先读懂它，再做一轮小测，最后把结果变成下一次复习的起点。</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="jumpGenerateBtn">开始学习</button>
+          <button class="btn btn-secondary" id="loadDashboardBtn">刷新页面</button>
+        </div>
+        <div id="overviewStats" class="stats-row"></div>
+      </div>
 
-        <section class="main-layout single-column-layout">
-          <main class="workspace card">
+      <div class="quick-start card hero-side-card">
+        <div class="panel-head">
+          <div>
+            <div class="small-kicker">Quick start</div>
+            <h3>从这些概念开始</h3>
+          </div>
+        </div>
+        <div class="starter-list">
+          <button class="starter-item starter-trigger" data-concept="MCP">
+            <strong>MCP</strong>
+            <span>理解模型如何更稳定地接入外部工具和上下文。</span>
+          </button>
+          <button class="starter-item starter-trigger" data-concept="AI Agents">
+            <strong>AI Agents</strong>
+            <span>理解多步规划、工具调用和执行闭环。</span>
+          </button>
+          <button class="starter-item starter-trigger" data-concept="Evals">
+            <strong>Evals</strong>
+            <span>理解模型和 AI 应用为什么需要系统性评估。</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="snapshot-panel card hero-side-card">
+        <div class="panel-head compact-head">
+          <div>
+            <div class="small-kicker">Learning snapshot</div>
+            <h4>学习概览</h4>
+          </div>
+        </div>
+
+        <div class="snapshot-tabs">
+          <button class="snapshot-tab active" data-tab="recent">最近学习</button>
+          <button class="snapshot-tab" data-tab="review">待复习</button>
+          <button class="snapshot-tab" data-tab="progress">掌握情况</button>
+        </div>
+
+        <div class="snapshot-panels">
+          <section class="snapshot-panel-body active" data-panel="recent">
+            <div id="historyList" class="stack-list compact-list">
+              <div class="empty-state">登录后，这里会记录你的学习历史。</div>
+            </div>
+          </section>
+
+          <section class="snapshot-panel-body" data-panel="review">
+            <div id="reviewList" class="stack-list compact-list">
+              <div class="empty-state">当前还没有到期复习内容。</div>
+            </div>
+          </section>
+
+          <section class="snapshot-panel-body" data-panel="progress">
+            <div id="masteryList" class="stack-list compact-list">
+              <div class="empty-state">完成一轮练习后，这里会显示你的掌握情况。</div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="main-layout single-column-layout">
+      <main class="workspace card">
             <div class="panel-head workspace-head">
               <div>
                 <div class="small-kicker">Workspace</div>
@@ -131,70 +187,7 @@
             <section id="conceptSection" class="hidden"></section>
             <section id="quizSection" class="hidden"></section>
             <section id="resultSection" class="hidden"></section>
-          </main>
-        </section>
-      </div>
-
-      <aside class="right-column">
-        <div class="hero-side-grid">
-          <div class="quick-start card hero-side-card">
-          <div class="panel-head">
-            <div>
-              <div class="small-kicker">Quick start</div>
-              <h3>从这些概念开始</h3>
-            </div>
-          </div>
-          <div class="starter-list">
-            <button class="starter-item starter-trigger" data-concept="MCP">
-              <strong>MCP</strong>
-              <span>理解模型如何更稳定地接入外部工具和上下文。</span>
-            </button>
-            <button class="starter-item starter-trigger" data-concept="AI Agents">
-              <strong>AI Agents</strong>
-              <span>理解多步规划、工具调用和执行闭环。</span>
-            </button>
-            <button class="starter-item starter-trigger" data-concept="Evals">
-              <strong>Evals</strong>
-              <span>理解模型和 AI 应用为什么需要系统性评估。</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="snapshot-panel card hero-side-card">
-          <div class="panel-head compact-head">
-            <div>
-              <div class="small-kicker">Learning snapshot</div>
-              <h4>学习概览</h4>
-            </div>
-          </div>
-
-          <div class="snapshot-tabs">
-            <button class="snapshot-tab active" data-tab="recent">最近学习</button>
-            <button class="snapshot-tab" data-tab="review">待复习</button>
-            <button class="snapshot-tab" data-tab="progress">掌握情况</button>
-          </div>
-
-          <div class="snapshot-panels">
-            <section class="snapshot-panel-body active" data-panel="recent">
-              <div id="historyList" class="stack-list compact-list">
-                <div class="empty-state">登录后，这里会记录你的学习历史。</div>
-              </div>
-            </section>
-
-            <section class="snapshot-panel-body" data-panel="review">
-              <div id="reviewList" class="stack-list compact-list">
-                <div class="empty-state">当前还没有到期复习内容。</div>
-              </div>
-            </section>
-
-            <section class="snapshot-panel-body" data-panel="progress">
-              <div id="masteryList" class="stack-list compact-list">
-                <div class="empty-state">完成一轮练习后，这里会显示你的掌握情况。</div>
-              </div>
-            </section>
-          </div>
-        </div>
-      </aside>
+      </main>
     </section>
   </div>
 
