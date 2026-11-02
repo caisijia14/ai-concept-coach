@@ -35,10 +35,10 @@ button, input {
 input { outline: none; }
 .hidden { display: none !important; }
 .page-shell {
-  width: calc(100vw - 20px);
-  max-width: none;
+  width: min(94vw, 1600px);
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 12px;
+  padding: 16px;
 }
 .card {
   background: rgba(255, 255, 255, 0.92);
@@ -49,9 +49,9 @@ input { outline: none; }
 .site-header {
   display: flex;
   justify-content: space-between;
-  gap: 18px;
+  gap: 20px;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 20px;
 }
 .brand-block {
   display: flex;
@@ -71,7 +71,7 @@ input { outline: none; }
 }
 .brand-block h1 {
   margin: 0;
-  font-size: 28px;
+  font-size: 30px;
   letter-spacing: -0.04em;
   font-family: "SF Pro Display", "Avenir Next", "PingFang SC", sans-serif;
 }
@@ -127,7 +127,7 @@ input { outline: none; }
 .quick-start,
 .workspace,
 .snapshot-panel {
-  padding: 16px;
+  padding: 20px;
 }
 .section-tag,
 .small-kicker {
@@ -144,15 +144,15 @@ input { outline: none; }
 }
 .hero-copy h2 {
   margin: 10px 0 12px;
-  font-size: clamp(52px, 3.6vw, 72px);
-  line-height: 1.02;
-  letter-spacing: -0.055em;
-  max-width: none;
+  font-size: clamp(42px, 3vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  max-width: 980px;
   font-family: "SF Pro Display", "Avenir Next", "PingFang SC", sans-serif;
 }
 .hero-copy p {
-  max-width: none;
-  font-size: 18px;
+  max-width: 920px;
+  font-size: 16px;
 }
 .hero-actions {
   display: flex;
@@ -192,7 +192,7 @@ input { outline: none; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  margin-top: 16px;
+  margin-top: 18px;
 }
 .stat {
   padding: 12px;
@@ -202,7 +202,7 @@ input { outline: none; }
 }
 .stat strong {
   display: block;
-  font-size: 34px;
+  font-size: 32px;
   letter-spacing: -0.05em;
   margin-bottom: 4px;
 }
@@ -221,7 +221,7 @@ input { outline: none; }
   margin: 8px 0 0;
   letter-spacing: -0.03em;
   font-family: "SF Pro Display", "Avenir Next", "PingFang SC", sans-serif;
-  font-size: 20px;
+  font-size: 22px;
 }
 .starter-list,
 .stack-list,
@@ -359,8 +359,8 @@ input { outline: none; }
 
 .workspace {
   display: grid;
-  gap: 12px;
-  min-height: 54vh;
+  gap: 14px;
+  min-height: 56vh;
 }
 .workspace-head p {
   margin-top: 8px;
@@ -402,7 +402,7 @@ input { outline: none; }
   border-radius: 999px;
   padding: 10px 14px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 14px;
 }
 .subtle-chip {
   background: rgba(47,143,115,0.04);
@@ -425,7 +425,7 @@ input { outline: none; }
 .path-card span {
   color: var(--muted);
   line-height: 1.55;
-  font-size: 15px;
+  font-size: 14px;
 }
 .path-card:hover {
   border-color: rgba(47,143,115,0.2);
@@ -465,7 +465,7 @@ input { outline: none; }
 }
 .info-block h4 {
   margin: 0 0 8px;
-  font-size: 18px;
+  font-size: 16px;
 }
 .list,
 .result-list {
@@ -489,7 +489,7 @@ input { outline: none; }
   border-radius: 16px;
   padding: 14px 16px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
 }
 .option-btn.selected {
   border-color: rgba(47,143,115,0.24);
@@ -587,7 +587,7 @@ input { outline: none; }
   align-items: center;
   padding: 6px 10px;
   border-radius: 999px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   background: rgba(24,50,43,0.06);
   color: var(--muted);
@@ -653,17 +653,19 @@ input { outline: none; }
   line-height: 1;
 }
 
-@media (max-width: 1600px) {
+
+@media (max-width: 1480px) {
   .hero-grid-wide {
-    grid-template-columns: minmax(0, 1.55fr) 280px 280px;
+    grid-template-columns: minmax(0, 1.45fr) 260px 260px;
   }
   .hero-copy h2 {
-    font-size: clamp(42px, 3vw, 56px);
+    font-size: clamp(38px, 2.8vw, 50px);
   }
 }
 @media (max-width: 1180px) {
   .site-header,
   .hero-grid-wide,
+  .main-layout,
   .content-grid,
   .summary-grid,
   .result-grid,
@@ -679,7 +681,7 @@ input { outline: none; }
   }
 }
 @media (max-width: 720px) {
-  .page-shell { padding: 10px; width: calc(100vw - 10px); }
+  .page-shell { width: calc(100vw - 12px); padding: 10px; }
   .hero-copy,
   .quick-start,
   .workspace,
