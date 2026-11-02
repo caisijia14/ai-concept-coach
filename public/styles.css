@@ -38,7 +38,7 @@ input { outline: none; }
   width: calc(100vw - 20px);
   max-width: none;
   margin: 0 auto;
-  padding: 10px;
+  padding: 12px;
 }
 .card {
   background: rgba(255, 255, 255, 0.92);
@@ -71,7 +71,7 @@ input { outline: none; }
 }
 .brand-block h1 {
   margin: 0;
-  font-size: 26px;
+  font-size: 28px;
   letter-spacing: -0.04em;
   font-family: "SF Pro Display", "Avenir Next", "PingFang SC", sans-serif;
 }
@@ -87,10 +87,11 @@ input { outline: none; }
   margin: 0;
   color: var(--muted);
   line-height: 1.65;
+  font-size: 14px;
 }
 .top-note {
-  font-size: 14px;
-  max-width: 640px;
+  font-size: 15px;
+  max-width: 720px;
 }
 .header-actions {
   display: flex;
@@ -107,14 +108,14 @@ input { outline: none; }
 .current-user strong {
   display: block;
   margin-bottom: 2px;
-  font-size: 14px;
+  font-size: 15px;
 }
 .hero-grid-wide {
   display: grid;
-  grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.58fr) minmax(260px, 0.58fr);
-  gap: 18px;
+  grid-template-columns: minmax(0, 2.2fr) 340px 340px;
+  gap: 16px;
   align-items: stretch;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 .hero-copy {
   min-height: 100%;
@@ -136,22 +137,22 @@ input { outline: none; }
   border-radius: 999px;
   background: rgba(24, 50, 43, 0.06);
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .hero-copy h2 {
-  margin: 8px 0 10px;
-  font-size: clamp(38px, 3vw, 54px);
-  line-height: 1.03;
-  letter-spacing: -0.05em;
+  margin: 10px 0 12px;
+  font-size: clamp(52px, 3.6vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
   max-width: none;
   font-family: "SF Pro Display", "Avenir Next", "PingFang SC", sans-serif;
 }
 .hero-copy p {
   max-width: none;
-  font-size: 16px;
+  font-size: 18px;
 }
 .hero-actions {
   display: flex;
@@ -162,9 +163,10 @@ input { outline: none; }
 .btn {
   border: 1px solid transparent;
   border-radius: 16px;
-  min-height: 46px;
-  padding: 0 16px;
+  min-height: 48px;
+  padding: 0 18px;
   font-weight: 700;
+  font-size: 15px;
   cursor: pointer;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
@@ -189,8 +191,8 @@ input { outline: none; }
 .stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 14px;
+  gap: 12px;
+  margin-top: 16px;
 }
 .stat {
   padding: 12px;
@@ -200,7 +202,7 @@ input { outline: none; }
 }
 .stat strong {
   display: block;
-  font-size: 26px;
+  font-size: 34px;
   letter-spacing: -0.05em;
   margin-bottom: 4px;
 }
@@ -219,6 +221,7 @@ input { outline: none; }
   margin: 8px 0 0;
   letter-spacing: -0.03em;
   font-family: "SF Pro Display", "Avenir Next", "PingFang SC", sans-serif;
+  font-size: 20px;
 }
 .starter-list,
 .stack-list,
@@ -251,7 +254,7 @@ input { outline: none; }
 .concept-panel,
 .result-card,
 .path-card {
-  padding: 12px;
+  padding: 14px;
 }
 .starter-item {
   width: 100%;
@@ -280,7 +283,7 @@ input { outline: none; }
   border-radius: 999px;
   padding: 8px 12px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
 }
 .snapshot-tab.active {
@@ -310,7 +313,7 @@ input { outline: none; }
   line-height: 1.45;
 }
 .compact-list .stack-item strong {
-  font-size: 13px;
+  font-size: 15px;
 }
 .snapshot-section-note {
   margin-top: 6px;
@@ -370,12 +373,13 @@ input { outline: none; }
 }
 .input-row input,
 .modal-form input {
-  height: 48px;
+  height: 54px;
   border-radius: 16px;
   border: 1px solid var(--line-strong);
   background: white;
-  padding: 0 14px;
+  padding: 0 16px;
   color: var(--text);
+  font-size: 16px;
 }
 .chip-row {
   display: flex;
@@ -398,7 +402,7 @@ input { outline: none; }
   border-radius: 999px;
   padding: 10px 14px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 15px;
 }
 .subtle-chip {
   background: rgba(47,143,115,0.04);
@@ -421,7 +425,7 @@ input { outline: none; }
 .path-card span {
   color: var(--muted);
   line-height: 1.55;
-  font-size: 13px;
+  font-size: 15px;
 }
 .path-card:hover {
   border-color: rgba(47,143,115,0.2);
@@ -461,7 +465,7 @@ input { outline: none; }
 }
 .info-block h4 {
   margin: 0 0 8px;
-  font-size: 15px;
+  font-size: 18px;
 }
 .list,
 .result-list {
@@ -483,8 +487,9 @@ input { outline: none; }
   border: 1px solid var(--line);
   background: white;
   border-radius: 16px;
-  padding: 12px 14px;
+  padding: 14px 16px;
   cursor: pointer;
+  font-size: 16px;
 }
 .option-btn.selected {
   border-color: rgba(47,143,115,0.24);
@@ -582,7 +587,7 @@ input { outline: none; }
   align-items: center;
   padding: 6px 10px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   background: rgba(24,50,43,0.06);
   color: var(--muted);
@@ -650,10 +655,10 @@ input { outline: none; }
 
 @media (max-width: 1600px) {
   .hero-grid-wide {
-    grid-template-columns: minmax(0, 1.7fr) 280px 280px;
+    grid-template-columns: minmax(0, 1.55fr) 280px 280px;
   }
   .hero-copy h2 {
-    font-size: clamp(34px, 2.6vw, 46px);
+    font-size: clamp(42px, 3vw, 56px);
   }
 }
 @media (max-width: 1180px) {
