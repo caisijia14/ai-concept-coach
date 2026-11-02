@@ -69,7 +69,6 @@ const dom = {
   masteryList: document.getElementById('masteryList'),
   activeUserCard: document.getElementById('activeUserCard'),
   overviewStats: document.getElementById('overviewStats'),
-  sidebarSummary: document.getElementById('sidebarSummary'),
   openLoginBtn: document.getElementById('openLoginBtn'),
   loginModal: document.getElementById('loginModal'),
   closeLoginBtn: document.getElementById('closeLoginBtn'),
@@ -257,7 +256,6 @@ function buildAnswerCards(answers) {
         <div class="meta-row">
           <span class="mini-pill ${item.isCorrect ? 'progress-chip' : 'review-chip'}">${item.isCorrect ? '已掌握' : '建议复习'}</span>
           <span class="mini-pill">正确答案：${item.correctAnswer}</span>
-        </div>
         <strong>${item.questionText}</strong>
         <p>你的答案：${item.userAnswer || '未作答'}</p>
         <p>${item.explanation}</p>
